@@ -44,4 +44,5 @@ class MovieDAO:
         self.session.add(movie)
         self.session.commit()
 
-
+    def get_class(self):
+        return Movie

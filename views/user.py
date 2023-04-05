@@ -29,9 +29,16 @@ class UserView(Resource):
 
     def put(self, uid):
         req_js = request.json
-        if 'id' not in req_js:
+        if 'id' in req_js:
             req_js["id"] = uid
-        user_service.update(uid)
+        user_service.update(req_js)
+        return "", 204
+
+    def patch(self, uid):
+        req_js = request.json
+        if 'id' in req_js:
+            req_js["id"] = uid
+        user_service.update(req_js)
         return "", 204
 
     def delete(self, uid):

@@ -23,14 +23,10 @@ class UserDAO:
         self.session.delete(result)
         self.session.commit()
 
-    def update(self, user_d):
-        result = self.get_one(user_d.get("id"))
-        result.username = user_d.get("username")
-        result.password = user_d.get("password")
-        result.role = user_d.get("role")
-
+    def update(self, result):
         self.session.add(result)
         self.session.commit()
 
-    def get_by_username(self, username):
-        return self.session.query(User).filter(User.username == username).first()
+
+    def get_by_email(self, email):
+        return self.session.query(User).filter(User.email == email).first()

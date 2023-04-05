@@ -19,7 +19,18 @@ class UserService:
         return self.dao.create(user_d)
 
     def update(self, user_d):
-        return self.dao.update(user_d)
+        result = self.get_one(user_d.get("id"))
+        if user_d.get("email"):
+            result.email = user_d.get("email")
+        if user_d.get("password"):
+            result.password = user_d.get("password")
+        if user_d.get("favorite_genre"):
+            result.favorite_genre = user_d.get("favorite_genre")
+        if user_d.get("name"):
+            result.name = user_d.get("name")
+        if user_d.get("surname"):
+            result.surname = user_d.get("surname")
+        return self.dao.update(result)
 
     def delete(self, uid):
         return self.dao.delete(uid)
@@ -31,11 +42,10 @@ class UserService:
             PWD_HASH_SALT,
             PWD_HASH_ITERATIONS
         )
-        print(base64.b64encode(hash_digest))
         return base64.b64encode(hash_digest)
 
-    def get_by_user_name(self, username):
-        return self.dao.get_by_username(username)
+    def get_by_email(self, email):
+        return self.dao.get_by_email(email)
 
     def compare_password(self, password_hash, other_password):
         decoded_digist = base64.b64decode(password_hash)

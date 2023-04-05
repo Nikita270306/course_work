@@ -8,8 +8,11 @@ class GenreService:
     def get_one(self, bid):
         return self.dao.get_one(bid)
 
-    def get_all(self):
-        return self.dao.get_all()
+    def get_all(self, filters):
+        genre = self.dao.get_all()
+        if filters.get('page') is not None:
+            genre = genre.limit(12).offset((int(filters.get('page')) - 1) * 12)
+        return genre
 
     def create(self, genre_d):
         return self.dao.create(genre_d)
